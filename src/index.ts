@@ -2,7 +2,7 @@ import { serve } from "@hono/node-server";
 import "dotenv/config";
 import { Hono } from "hono";
 import hatsSubgraphClient from "./libs/hatsprotocol";
-import pinataClient from "./libs/pinata";
+import pinata from "./libs/pinata";
 import interactions from "./routes/interacations";
 import webhooks from "./routes/webhooks";
 
@@ -35,7 +35,7 @@ app.get("/", async () => {
 			details: true,
 		},
 	});
-	const { data } = await pinataClient.gateways.private.get(
+	const { data } = await pinata.gateways.private.get(
 		hat.details?.replace("ipfs://", "") || "",
 	);
 	console.log(data);

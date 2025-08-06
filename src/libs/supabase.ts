@@ -1,12 +1,13 @@
 import { createClient } from "@supabase/supabase-js";
+import type { Database } from "../types/supabase";
 
 const supabaseUrl = process.env.SUPABASE_URL;
-const supabaseKey = process.env.SUPABASE_KEY;
-if (!supabaseUrl || !supabaseKey) {
+const supabaseAnonKey = process.env.SUPABASE_ANON_KEY;
+if (!supabaseUrl || !supabaseAnonKey) {
 	throw new Error(
-		"SUPABASE_URL or SUPABASE_KEY is not set in environment variables",
+		"SUPABASE_URL or SUPABASE_ANON_KEY is not set in environment variables",
 	);
 }
-const supabaseClient = createClient(supabaseUrl, supabaseKey);
+const supabase = createClient<Database>(supabaseUrl, supabaseAnonKey);
 
-export default supabaseClient;
+export default supabase;

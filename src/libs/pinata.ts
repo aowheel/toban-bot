@@ -7,9 +7,9 @@ if (!pinataJwt || !pinataGateway) {
 		"PINATA_JWT or PINATA_GATEWAY is not set in environment variables",
 	);
 }
-const pinataClient = new PinataSDK({
+const pinata = new PinataSDK({
 	pinataJwt,
 	pinataGateway,
 });
 
-export default pinataClient;
+export default pinata;

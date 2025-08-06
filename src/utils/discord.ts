@@ -34,7 +34,7 @@ export const verifyKeyMiddleware = createMiddleware(async (c, next) => {
 		throw Error("Missing signature or timestamp headers");
 	}
 
-	const rawBody = await c.req.raw.arrayBuffer();
+	const rawBody = await c.req.raw.text();
 	const isValidReq = await verifyKey(
 		rawBody,
 		signature,
@@ -44,7 +44,7 @@ export const verifyKeyMiddleware = createMiddleware(async (c, next) => {
 	if (!isValidReq) {
 		return c.text("Invalid request signature", 401);
 	}
-	const body = JSON.parse(Buffer.from(rawBody).toString());
+	const body = JSON.parse(rawBody);
 
 	c.set("body", body);
 
