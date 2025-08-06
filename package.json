@@ -1,0 +1,25 @@
+{
+	"name": "toban-bot",
+	"type": "module",
+	"scripts": {
+		"dev": "tsx watch src/index.ts",
+		"build": "tsc",
+		"start": "node dist/index.js"
+	},
+	"dependencies": {
+		"@hatsprotocol/sdk-v1-core": "^0.12.4",
+		"@hatsprotocol/sdk-v1-subgraph": "^1.1.2",
+		"@hono/node-server": "^1.18.1",
+		"@namestone/namestone-sdk": "^0.2.15",
+		"@supabase/supabase-js": "^2.53.0",
+		"discord-interactions": "^4.3.0",
+		"dotenv": "^17.2.1",
+		"hono": "^4.8.12",
+		"pinata": "^2.4.9"
+	},
+	"devDependencies": {
+		"@types/node": "^20.11.17",
+		"tsx": "^4.7.1",
+		"typescript": "^5.8.3"
+	}
+}
