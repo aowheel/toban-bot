@@ -1,10 +1,10 @@
-import "dotenv/config";
 import { serve } from "@hono/node-server";
+import "dotenv/config";
 import { Hono } from "hono";
 import hatsSubgraphClient from "./libs/hatsprotocol";
 import pinataClient from "./libs/pinata";
-import webhooks from "./routes/webhooks";
 import interactions from "./routes/interacations";
+import webhooks from "./routes/webhooks";
 
 const app = new Hono();
 
