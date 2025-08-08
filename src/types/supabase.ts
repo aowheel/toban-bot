@@ -38,17 +38,17 @@ export type Database = {
         Row: {
           channel_id: string
           created_at: string
-          id: number
+          id: string
         }
         Insert: {
           channel_id: string
           created_at?: string
-          id?: number
+          id?: string
         }
         Update: {
           channel_id?: string
           created_at?: string
-          id?: number
+          id?: string
         }
         Relationships: []
       }
@@ -56,21 +56,21 @@ export type Database = {
         Row: {
           chain_id: number
           created_at: string
-          id: number
+          id: string
           name: string
           tree_id: number
         }
         Insert: {
           chain_id: number
           created_at?: string
-          id?: number
+          id?: string
           name: string
           tree_id: number
         }
         Update: {
           chain_id?: number
           created_at?: string
-          id?: number
+          id?: string
           name?: string
           tree_id?: number
         }
@@ -78,30 +78,30 @@ export type Database = {
       }
       workspace_channel_relations: {
         Row: {
-          created_at: string
-          id: number
+          channel_id: string
+          workspace_id: string
         }
         Insert: {
-          created_at?: string
-          id?: number
+          channel_id: string
+          workspace_id: string
         }
         Update: {
-          created_at?: string
-          id?: number
+          channel_id?: string
+          workspace_id?: string
         }
         Relationships: [
           {
-            foreignKeyName: "workspace_channel_relations_id_fkey"
-            columns: ["id"]
-            isOneToOne: true
-            referencedRelation: "toban_workspaces"
+            foreignKeyName: "workspace_channel_relations_channel_id_fkey"
+            columns: ["channel_id"]
+            isOneToOne: false
+            referencedRelation: "discord_channels"
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "workspace_channel_relations_id_fkey1"
-            columns: ["id"]
-            isOneToOne: true
-            referencedRelation: "discord_channels"
+            foreignKeyName: "workspace_channel_relations_workspace_id_fkey"
+            columns: ["workspace_id"]
+            isOneToOne: false
+            referencedRelation: "toban_workspaces"
             referencedColumns: ["id"]
           },
         ]

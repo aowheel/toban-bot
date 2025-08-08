@@ -2,7 +2,7 @@ import { treeIdToTopHatId } from "@hatsprotocol/sdk-v1-core";
 import { Hono } from "hono";
 import { getHat } from "../../utils/hatsprotocol";
 import { getName } from "../../utils/namestone";
-import { ipfsUrlToRecord } from "../../utils/pinata";
+import { ipfsUrlToJson } from "../../utils/pinata";
 
 const goldsky = new Hono();
 
@@ -27,9 +27,17 @@ goldsky.post("/", async (c) => {
 		getHat(topHatId),
 	]);
 
+	if (!hat.details) {
+		throw new Error("Hat details not found");
+	}
+
+	if (!topHat.details) {
+		throw new Error("Top hat details not found");
+	}
+
 	const [role, workspace] = await Promise.all([
-		hat.details ? ipfsUrlToRecord(hat.details) : null,
-		topHat.details ? ipfsUrlToRecord(topHat.details) : null,
+		ipfsUrlToJson(hat.details),
+		ipfsUrlToJson(topHat.details),
 	]);
 });
 

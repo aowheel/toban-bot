@@ -1,9 +1,7 @@
 import NameStone from "@namestone/namestone-sdk";
+import { getNamestoneEnv } from "../config";
 
-const namestoneApiKey = process.env.NAMESTONE_API_KEY;
-if (!namestoneApiKey) {
-	throw new Error("NAMESTONE_API_KEY is not set in environment variables");
-}
+const { namestoneApiKey } = getNamestoneEnv();
 const ns = new NameStone(namestoneApiKey);
 
 export default ns;
