@@ -1,12 +1,14 @@
 import { treeIdToTopHatId } from "@hatsprotocol/sdk-v1-core";
 import { Hono } from "hono";
+import { createMessage } from "../../utils/discord";
 import { getHat } from "../../utils/hatsprotocol";
 import { getName } from "../../utils/namestone";
 import { ipfsUrlToJson } from "../../utils/pinata";
+import { getChannelsByWorkspace } from "../../utils/supabase";
 
 const goldsky = new Hono();
 
-goldsky.post("/", async (c) => {
+goldsky.post("*", async (c) => {
 	const {
 		data: { new: transferData },
 	} = await c.req.json();
@@ -27,18 +29,23 @@ goldsky.post("/", async (c) => {
 		getHat(topHatId),
 	]);
 
-	if (!hat.details) {
-		throw new Error("Hat details not found");
-	}
+	const [role, workspace] = (await Promise.all([
+		hat.details ? ipfsUrlToJson(hat.details) : {},
+		topHat.details ? ipfsUrlToJson(topHat.details) : {},
+	])) as [unknown, unknown] as [
+		{ data?: { name?: string } },
+		{ data?: { name?: string } },
+	];
 
-	if (!topHat.details) {
-		throw new Error("Top hat details not found");
-	}
+	const content = `✨ \`${wearerName || wearer}\`'s \`${role.data?.name || "unknown"}\` role transferred in workspace **${workspace.data?.name || "unknown"}**\n- **From** \`${fromName || from}\`\n- **To** \`${toName || to}\`\n- **Amount** \`${amount}\``;
 
-	const [role, workspace] = await Promise.all([
-		ipfsUrlToJson(hat.details),
-		ipfsUrlToJson(topHat.details),
-	]);
+	const channels = await getChannelsByWorkspace(8453, treeId);
+
+	await Promise.all(
+		channels.map((channel) => createMessage(channel.channel_id, content)),
+	);
+
+	return c.json({ status: "success" });
 });
 
 export default goldsky;

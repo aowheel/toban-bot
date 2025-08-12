@@ -34,7 +34,7 @@ export async function subscribeWorkspace(
 	return workspace;
 }
 
-export async function getSubscribedWorkspaces(channelId: string) {
+export async function getWorkspacesByChannel(channelId: string) {
 	const { data: workspaces, error } = await supabase
 		.from("toban_workspaces")
 		.select("*, discord_channels!inner(*)")
@@ -43,6 +43,18 @@ export async function getSubscribedWorkspaces(channelId: string) {
 	if (error) throw error;
 
 	return workspaces;
+}
+
+export async function getChannelsByWorkspace(chainId: number, treeId: number) {
+	const { data: channels, error } = await supabase
+		.from("discord_channels")
+		.select("*, toban_workspaces!inner(*)")
+		.eq("toban_workspaces.chain_id", chainId)
+		.eq("toban_workspaces.tree_id", treeId);
+
+	if (error) throw error;
+
+	return channels;
 }
 
 export async function unsubscribeWorkspace(

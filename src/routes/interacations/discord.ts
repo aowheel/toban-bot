@@ -8,7 +8,7 @@ import {
 import { getHat } from "../../utils/hatsprotocol";
 import { ipfsUrlToJson } from "../../utils/pinata";
 import {
-	getSubscribedWorkspaces,
+	getWorkspacesByChannel,
 	subscribeWorkspace,
 	unsubscribeWorkspace,
 } from "../../utils/supabase";
@@ -93,11 +93,12 @@ discord.post("/", verifyKeyMiddleware, async (c) => {
 			if (subcommand?.name === "list") {
 				(async () => {
 					try {
-						const workspaces = await getSubscribedWorkspaces(channel_id);
+						const workspaces = await getWorkspacesByChannel(channel_id);
 
 						const content = `📋 Your workspace subscriptions:\n${workspaces
 							.map(
-								(workspace) => `- ${workspace.name} (ID: ${workspace.tree_id})`,
+								(workspace) =>
+									`- **${workspace.name}** ( **ID** \`${workspace.tree_id}\` )`,
 							)
 							.join("\n")}`;
 
