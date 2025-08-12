@@ -1,15 +1,15 @@
 import { verifyKey } from "discord-interactions";
 import { createMiddleware } from "hono/factory";
-import { getDiscordEnv } from "../config";
+import { getDiscordEnv } from "../config.js";
 
 export async function editOriginalInteractionResponse(
 	token: string,
 	content: string,
 ) {
-	const { discordApplicationId, discordBotToken, DISCORD_API_BASE_URL } =
+	const { discordApplicationId, discordBotToken, discordApiBaseUrl } =
 		getDiscordEnv();
 	await fetch(
-		`${DISCORD_API_BASE_URL}/webhooks/${discordApplicationId}/${token}/messages/@original`,
+		`${discordApiBaseUrl}/webhooks/${discordApplicationId}/${token}/messages/@original`,
 		{
 			method: "PATCH",
 			headers: {
@@ -22,8 +22,8 @@ export async function editOriginalInteractionResponse(
 }
 
 export async function createMessage(channelId: string, content: string) {
-	const { discordBotToken, DISCORD_API_BASE_URL } = getDiscordEnv();
-	await fetch(`${DISCORD_API_BASE_URL}/channels/${channelId}/messages`, {
+	const { discordBotToken, discordApiBaseUrl } = getDiscordEnv();
+	await fetch(`${discordApiBaseUrl}/channels/${channelId}/messages`, {
 		method: "POST",
 		headers: {
 			Authorization: `Bot ${discordBotToken}`,

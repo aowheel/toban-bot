@@ -1,5 +1,5 @@
 import { Hono } from "hono";
-import discord from "./discord";
+import discord from "./discord.js";
 
 const interactions = new Hono();
 

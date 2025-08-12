@@ -4,14 +4,14 @@ import { Hono } from "hono";
 import {
 	editOriginalInteractionResponse,
 	verifyKeyMiddleware,
-} from "../../utils/discord";
-import { getHat } from "../../utils/hatsprotocol";
-import { ipfsUrlToJson } from "../../utils/pinata";
+} from "../../utils/discord.js";
+import { getHat } from "../../utils/hatsprotocol.js";
+import { ipfsUrlToJson } from "../../utils/pinata.js";
 import {
 	getWorkspacesByChannel,
 	subscribeWorkspace,
 	unsubscribeWorkspace,
-} from "../../utils/supabase";
+} from "../../utils/supabase.js";
 
 const discord = new Hono();
 

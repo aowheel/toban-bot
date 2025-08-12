@@ -1,5 +1,5 @@
 import { createMiddleware } from "hono/factory";
-import { getGoldskyEnv } from "../config";
+import { getGoldskyEnv } from "../config.js";
 
 export const verifySecretMiddleware = createMiddleware(async (c, next) => {
 	const { goldskyWebhookSecret } = getGoldskyEnv();

@@ -1,9 +1,8 @@
-import "dotenv/config";
-import { DISCORD_API_BASE_URL } from "../../src/libs/discord";
+import { getDiscordEnv } from "../../src/config";
 
 async function createCommand() {
-	const discordApplicationId = process.env.DISCORD_APPLICATION_ID;
-	const discordBotToken = process.env.DISCORD_BOT_TOKEN;
+	const { discordApplicationId, discordBotToken, discordApiBaseUrl } =
+		getDiscordEnv();
 
 	if (!discordApplicationId || !discordBotToken) {
 		throw new Error(
@@ -50,7 +49,7 @@ async function createCommand() {
 	};
 
 	const res = await fetch(
-		`${DISCORD_API_BASE_URL}/applications/${discordApplicationId}/commands`,
+		`${discordApiBaseUrl}/applications/${discordApplicationId}/commands`,
 		{
 			method: "POST",
 			headers: {

@@ -1,8 +1,8 @@
-import { DISCORD_API_BASE_URL } from "../../src/libs/discord";
+import { getDiscordEnv } from "../../src/config";
 
 async function deleteCommand() {
-	const discordApplicationId = process.env.DISCORD_APPLICATION_ID;
-	const discordBotToken = process.env.DISCORD_BOT_TOKEN;
+	const { discordApplicationId, discordBotToken, discordApiBaseUrl } =
+		getDiscordEnv();
 
 	if (!discordApplicationId || !discordBotToken) {
 		throw new Error(
@@ -13,7 +13,7 @@ async function deleteCommand() {
 	const commandId = process.argv[2];
 
 	const res = await fetch(
-		`${DISCORD_API_BASE_URL}/applications/${discordApplicationId}/commands/${commandId}`,
+		`${discordApiBaseUrl}/applications/${discordApplicationId}/commands/${commandId}`,
 		{
 			method: "DELETE",
 			headers: {

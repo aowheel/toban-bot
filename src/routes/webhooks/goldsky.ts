@@ -1,11 +1,11 @@
 import { treeIdToTopHatId } from "@hatsprotocol/sdk-v1-core";
 import { Hono } from "hono";
-import { createMessage } from "../../utils/discord";
-import { verifySecretMiddleware } from "../../utils/goldsky";
-import { getHat } from "../../utils/hatsprotocol";
-import { getName } from "../../utils/namestone";
-import { ipfsUrlToJson } from "../../utils/pinata";
-import { getChannelsByWorkspace } from "../../utils/supabase";
+import { createMessage } from "../../utils/discord.js";
+import { verifySecretMiddleware } from "../../utils/goldsky.js";
+import { getHat } from "../../utils/hatsprotocol.js";
+import { getName } from "../../utils/namestone.js";
+import { ipfsUrlToJson } from "../../utils/pinata.js";
+import { getChannelsByWorkspace } from "../../utils/supabase.js";
 
 const goldsky = new Hono();
 

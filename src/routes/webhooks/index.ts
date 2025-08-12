@@ -1,5 +1,5 @@
 import { Hono } from "hono";
-import goldsky from "./goldsky";
+import goldsky from "./goldsky.js";
 
 const webhooks = new Hono();
 

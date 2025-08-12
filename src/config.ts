@@ -1,3 +1,5 @@
+import "dotenv/config";
+
 export const getDiscordEnv = () => {
 	const discordApplicationId = process.env.DISCORD_APPLICATION_ID;
 	const discordBotToken = process.env.DISCORD_BOT_TOKEN;
@@ -6,12 +8,12 @@ export const getDiscordEnv = () => {
 		throw new Error("DISCORD_APPLICATION_ID is not set");
 	if (!discordBotToken) throw new Error("DISCORD_BOT_TOKEN is not set");
 	if (!discordPublicKey) throw new Error("DISCORD_PUBLIC_KEY is not set");
-	const DISCORD_API_BASE_URL = "https://discord.com/api/v10";
+	const discordApiBaseUrl = "https://discord.com/api/v10";
 	return {
 		discordApplicationId,
 		discordBotToken,
 		discordPublicKey,
-		DISCORD_API_BASE_URL,
+		discordApiBaseUrl,
 	};
 };
 

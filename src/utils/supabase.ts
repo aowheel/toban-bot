@@ -1,4 +1,4 @@
-import supabase from "../libs/supabase";
+import supabase from "../libs/supabase.js";
 
 export async function subscribeWorkspace(
 	channelId: string,

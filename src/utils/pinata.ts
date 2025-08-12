@@ -1,4 +1,4 @@
-import pinata from "../libs/pinata";
+import pinata from "../libs/pinata.js";
 
 export async function ipfsUrlToJson(ipfsUrl: string) {
 	const cid = ipfsUrl.replace("ipfs://", "");

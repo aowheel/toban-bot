@@ -1,5 +1,5 @@
 import NameStone from "@namestone/namestone-sdk";
-import { getNamestoneEnv } from "../config";
+import { getNamestoneEnv } from "../config.js";
 
 const { namestoneApiKey } = getNamestoneEnv();
 const ns = new NameStone(namestoneApiKey);

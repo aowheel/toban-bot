@@ -1,10 +1,9 @@
 import { serve } from "@hono/node-server";
-import "dotenv/config";
 import { Hono } from "hono";
 import { logger } from "hono/logger";
 import { prettyJSON } from "hono/pretty-json";
-import interactions from "./routes/interacations";
-import webhooks from "./routes/webhooks";
+import interactions from "./routes/interacations/index.js";
+import webhooks from "./routes/webhooks/index.js";
 
 const app = new Hono();
 
