@@ -38,16 +38,16 @@ export const verifyKeyMiddleware = createMiddleware(async (c, next) => {
 	const signature = c.req.header("X-Signature-Ed25519");
 	const timestamp = c.req.header("X-Signature-Timestamp");
 	if (!signature || !timestamp) {
-		throw Error("Missing signature or timestamp headers");
+		return c.text("Missing signature or timestamp", 401);
 	}
 	const rawBody = await c.req.raw.text();
-	const isValidReq = await verifyKey(
+	const isValid = await verifyKey(
 		rawBody,
 		signature,
 		timestamp,
 		discordPublicKey,
 	);
-	if (!isValidReq) {
+	if (!isValid) {
 		return c.text("Invalid request signature", 401);
 	}
 	const body = JSON.parse(rawBody);

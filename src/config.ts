@@ -38,3 +38,10 @@ export const getPinataEnv = () => {
 	if (!pinataGatewayKey) throw new Error("PINATA_GATEWAY_KEY is not set");
 	return { pinataJwt, pinataGateway, pinataGatewayKey };
 };
+
+export const getGoldskyEnv = () => {
+	const goldskyWebhookSecret = process.env.GOLDSKY_WEBHOOK_SECRET;
+	if (!goldskyWebhookSecret)
+		throw new Error("GOLDSKY_WEBHOOK_SECRET is not set");
+	return { goldskyWebhookSecret };
+};

@@ -1,6 +1,7 @@
 import { treeIdToTopHatId } from "@hatsprotocol/sdk-v1-core";
 import { Hono } from "hono";
 import { createMessage } from "../../utils/discord";
+import { verifySecretMiddleware } from "../../utils/goldsky";
 import { getHat } from "../../utils/hatsprotocol";
 import { getName } from "../../utils/namestone";
 import { ipfsUrlToJson } from "../../utils/pinata";
@@ -8,7 +9,7 @@ import { getChannelsByWorkspace } from "../../utils/supabase";
 
 const goldsky = new Hono();
 
-goldsky.post("*", async (c) => {
+goldsky.post("*", verifySecretMiddleware, async (c) => {
 	const {
 		data: { new: transferData },
 	} = await c.req.json();
@@ -45,7 +46,7 @@ goldsky.post("*", async (c) => {
 		channels.map((channel) => createMessage(channel.channel_id, content)),
 	);
 
-	return c.json({ status: "success" });
+	return c.text("Success");
 });
 
 export default goldsky;
