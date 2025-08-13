@@ -10,6 +10,8 @@ const app = new Hono();
 app.use("*", logger());
 app.use("*", prettyJSON());
 
+app.get("/healthz", (c) => c.text("OK"));
+
 app.route("/webhooks", webhooks);
 app.route("/interactions", interactions);
 
