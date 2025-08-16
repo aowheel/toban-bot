@@ -1,31 +1,14 @@
-import { getDiscordEnv } from "../../src/config";
+import { getDiscordEnv } from "../../src/config.js";
+import { axiosInstance } from "../../src/utils/discord.js";
+
+const { discordApplicationId } = getDiscordEnv();
 
 async function listCommand() {
-	const { discordApplicationId, discordBotToken, discordApiBaseUrl } =
-		getDiscordEnv();
-
-	if (!discordApplicationId || !discordBotToken) {
-		throw new Error(
-			"DISCORD_APPLICATION_ID or DISCORD_BOT_TOKEN is not set in environment variables",
-		);
-	}
-
-	const res = await fetch(
-		`${discordApiBaseUrl}/applications/${discordApplicationId}/commands`,
-		{
-			method: "GET",
-			headers: {
-				Authorization: `Bot ${discordBotToken}`,
-				"Content-Type": "application/json",
-			},
-		},
+	const res = await axiosInstance.get(
+		`/applications/${discordApplicationId}/commands`,
 	);
 
-	if (!res.ok) {
-		throw new Error(`Failed to list commands: ${res.statusText}`);
-	}
-
-	const commands = await res.json();
+	const commands = res.data;
 	const commandIds = commands.map(({ id }: { id: string }) => id);
 
 	return commandIds;

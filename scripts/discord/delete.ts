@@ -1,29 +1,16 @@
-import { getDiscordEnv } from "../../src/config";
+import { getDiscordEnv } from "../../src/config.js";
+import { axiosInstance } from "../../src/utils/discord.js";
+
+const { discordApplicationId } = getDiscordEnv();
 
 async function deleteCommand() {
-	const { discordApplicationId, discordBotToken, discordApiBaseUrl } =
-		getDiscordEnv();
-
-	if (!discordApplicationId || !discordBotToken) {
-		throw new Error(
-			"DISCORD_APPLICATION_ID or DISCORD_BOT_TOKEN is not set in environment variables",
-		);
-	}
-
 	const commandId = process.argv[2];
 
-	const res = await fetch(
-		`${discordApiBaseUrl}/applications/${discordApplicationId}/commands/${commandId}`,
-		{
-			method: "DELETE",
-			headers: {
-				Authorization: `Bot ${discordBotToken}`,
-				"Content-Type": "application/json",
-			},
-		},
+	const res = await axiosInstance.delete(
+		`/applications/${discordApplicationId}/commands/${commandId}`,
 	);
 
-	return res.json();
+	return res.data;
 }
 
 deleteCommand()

@@ -10,7 +10,7 @@ const {
 	discordApiBaseUrl,
 } = getDiscordEnv();
 
-const axiosInstance = axios.create({
+export const axiosInstance = axios.create({
 	baseURL: discordApiBaseUrl,
 	headers: { Authorization: `Bot ${discordBotToken}` },
 });

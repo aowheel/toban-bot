@@ -1,15 +1,9 @@
-import { getDiscordEnv } from "../../src/config";
+import { getDiscordEnv } from "../../src/config.js";
+import { axiosInstance } from "../../src/utils/discord.js";
+
+const { discordApplicationId } = getDiscordEnv();
 
 async function createCommand() {
-	const { discordApplicationId, discordBotToken, discordApiBaseUrl } =
-		getDiscordEnv();
-
-	if (!discordApplicationId || !discordBotToken) {
-		throw new Error(
-			"DISCORD_APPLICATION_ID or DISCORD_BOT_TOKEN is not set in environment variables",
-		);
-	}
-
 	const body = {
 		name: "workspace",
 		description: "Manage your workspace subscriptions",
@@ -48,19 +42,12 @@ async function createCommand() {
 		],
 	};
 
-	const res = await fetch(
-		`${discordApiBaseUrl}/applications/${discordApplicationId}/commands`,
-		{
-			method: "POST",
-			headers: {
-				Authorization: `Bot ${discordBotToken}`,
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify(body),
-		},
+	const res = await axiosInstance.post(
+		`/applications/${discordApplicationId}/commands`,
+		body,
 	);
 
-	return res.json();
+	return res.data;
 }
 
 createCommand()
