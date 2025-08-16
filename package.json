@@ -15,6 +15,7 @@
 		"@hono/node-server": "^1.18.1",
 		"@namestone/namestone-sdk": "^0.2.15",
 		"@supabase/supabase-js": "^2.53.0",
+		"axios": "^1.11.0",
 		"discord-interactions": "^4.3.0",
 		"dotenv": "^17.2.1",
 		"hono": "^4.8.12",

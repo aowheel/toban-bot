@@ -1,11 +1,14 @@
 import { treeIdToTopHatId } from "@hatsprotocol/sdk-v1-core";
 import { Hono } from "hono";
+import { getTobanEnv } from "../../config.js";
 import { createMessage } from "../../utils/discord.js";
 import { verifySecretMiddleware } from "../../utils/goldsky.js";
 import { getHat } from "../../utils/hatsprotocol.js";
 import { getName } from "../../utils/namestone.js";
 import { ipfsUrlToJson } from "../../utils/pinata.js";
 import { getChannelsByWorkspace } from "../../utils/supabase.js";
+
+const { tobanUrl } = getTobanEnv();
 
 const goldsky = new Hono();
 
@@ -38,12 +41,30 @@ goldsky.post("*", verifySecretMiddleware, async (c) => {
 		{ data?: { name?: string } },
 	];
 
-	const content = `✨ \`${wearerName || wearer}\`'s \`${role.data?.name || "unknown"}\` role transferred in workspace **${workspace.data?.name || "unknown"}**\n- **From** \`${fromName || from}\`\n- **To** \`${toName || to}\`\n- **Amount** \`${amount}\``;
+	const embeds = [
+		{
+			title: `✨ ${wearerName || wearer}'s Role Transfer`,
+			url: `${tobanUrl}/${treeId}`,
+			fields: [
+				{ name: "Role", value: role.data?.name || "unknown", inline: true },
+				{ name: "From", value: fromName || from, inline: true },
+				{ name: "To", value: toName || to, inline: true },
+				{ name: "Amount", value: String(amount), inline: true },
+			],
+			...(workspace.data?.name && {
+				footer: {
+					text: workspace.data?.name,
+					icon_url: `${tobanUrl}/images/toban-logo.svg`,
+				},
+			}),
+			color: 0xf4b520,
+		},
+	];
 
 	const channels = await getChannelsByWorkspace(8453, treeId);
 
 	await Promise.all(
-		channels.map((channel) => createMessage(channel.channel_id, content)),
+		channels.map((channel) => createMessage(channel.channel_id, { embeds })),
 	);
 
 	return c.text("Success");

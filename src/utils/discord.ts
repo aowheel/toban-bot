@@ -1,40 +1,38 @@
+import axios from "axios";
 import { verifyKey } from "discord-interactions";
 import { createMiddleware } from "hono/factory";
 import { getDiscordEnv } from "../config.js";
 
+const {
+	discordApplicationId,
+	discordBotToken,
+	discordPublicKey,
+	discordApiBaseUrl,
+} = getDiscordEnv();
+
+const axiosInstance = axios.create({
+	baseURL: discordApiBaseUrl,
+	headers: { Authorization: `Bot ${discordBotToken}` },
+});
+
 export async function editOriginalInteractionResponse(
 	token: string,
-	content: string,
+	message: Record<string, unknown>,
 ) {
-	const { discordApplicationId, discordBotToken, discordApiBaseUrl } =
-		getDiscordEnv();
-	await fetch(
-		`${discordApiBaseUrl}/webhooks/${discordApplicationId}/${token}/messages/@original`,
-		{
-			method: "PATCH",
-			headers: {
-				Authorization: `Bot ${discordBotToken}`,
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify({ content }),
-		},
+	await axiosInstance.patch(
+		`/webhooks/${discordApplicationId}/${token}/messages/@original`,
+		message,
 	);
 }
 
-export async function createMessage(channelId: string, content: string) {
-	const { discordBotToken, discordApiBaseUrl } = getDiscordEnv();
-	await fetch(`${discordApiBaseUrl}/channels/${channelId}/messages`, {
-		method: "POST",
-		headers: {
-			Authorization: `Bot ${discordBotToken}`,
-			"Content-Type": "application/json",
-		},
-		body: JSON.stringify({ content }),
-	});
+export async function createMessage(
+	channelId: string,
+	message: Record<string, unknown>,
+) {
+	await axiosInstance.post(`/channels/${channelId}/messages`, message);
 }
 
 export const verifyKeyMiddleware = createMiddleware(async (c, next) => {
-	const { discordPublicKey } = getDiscordEnv();
 	const signature = c.req.header("X-Signature-Ed25519");
 	const timestamp = c.req.header("X-Signature-Timestamp");
 	if (!signature || !timestamp) {

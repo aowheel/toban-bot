@@ -47,3 +47,8 @@ export const getGoldskyEnv = () => {
 		throw new Error("GOLDSKY_WEBHOOK_SECRET is not set");
 	return { goldskyWebhookSecret };
 };
+
+export const getTobanEnv = () => {
+	const tobanUrl = "https://toban.xyz";
+	return { tobanUrl };
+};

@@ -33,20 +33,18 @@ discord.post("/", verifyKeyMiddleware, async (c) => {
 						)?.value;
 
 						if (!workspaceId) {
-							return editOriginalInteractionResponse(
-								token,
-								`❌ Workspace ID is required`,
-							);
+							return editOriginalInteractionResponse(token, {
+								content: `❌ Workspace ID is required`,
+							});
 						}
 
 						const topHatId = treeIdToTopHatId(Number(workspaceId));
 						const topHat = await getHat(topHatId);
 
 						if (!topHat.details) {
-							return editOriginalInteractionResponse(
-								token,
-								`❌ No details found for workspace ID ${workspaceId}`,
-							);
+							return editOriginalInteractionResponse(token, {
+								content: `❌ No details found for workspace ID ${workspaceId}`,
+							});
 						}
 
 						const json = (await ipfsUrlToJson(topHat.details)) as unknown as {
@@ -54,10 +52,9 @@ discord.post("/", verifyKeyMiddleware, async (c) => {
 						};
 
 						if (!json.data?.name) {
-							return editOriginalInteractionResponse(
-								token,
-								`❌ Invalid data found for workspace ID ${workspaceId}`,
-							);
+							return editOriginalInteractionResponse(token, {
+								content: `❌ Invalid data found for workspace ID ${workspaceId}`,
+							});
 						}
 
 						const workspace = await subscribeWorkspace(
@@ -67,18 +64,16 @@ discord.post("/", verifyKeyMiddleware, async (c) => {
 							json.data.name,
 						);
 
-						await editOriginalInteractionResponse(
-							token,
-							`✅ Workspace **${workspace.name}** subscribed successfully!`,
-						);
+						await editOriginalInteractionResponse(token, {
+							content: `✅ Workspace **${workspace.name}** subscribed successfully!`,
+						});
 					} catch (error) {
 						console.error(error);
 
 						try {
-							await editOriginalInteractionResponse(
-								token,
-								`❌ An error occurred while subscribing to the workspace.`,
-							);
+							await editOriginalInteractionResponse(token, {
+								content: `❌ An error occurred while subscribing to the workspace.`,
+							});
 						} catch (error) {
 							console.error(error);
 						}
@@ -102,15 +97,14 @@ discord.post("/", verifyKeyMiddleware, async (c) => {
 							)
 							.join("\n")}`;
 
-						await editOriginalInteractionResponse(token, content);
+						await editOriginalInteractionResponse(token, { content });
 					} catch (error) {
 						console.error(error);
 
 						try {
-							await editOriginalInteractionResponse(
-								token,
-								`❌ An error occurred while fetching workspace subscriptions.`,
-							);
+							await editOriginalInteractionResponse(token, {
+								content: `❌ An error occurred while fetching workspace subscriptions.`,
+							});
 						} catch (error) {
 							console.error(error);
 						}
@@ -130,10 +124,9 @@ discord.post("/", verifyKeyMiddleware, async (c) => {
 						)?.value;
 
 						if (!workspaceId) {
-							return editOriginalInteractionResponse(
-								token,
-								`❌ Workspace ID is required`,
-							);
+							return editOriginalInteractionResponse(token, {
+								content: `❌ Workspace ID is required`,
+							});
 						}
 
 						const workspace = await unsubscribeWorkspace(
@@ -142,18 +135,16 @@ discord.post("/", verifyKeyMiddleware, async (c) => {
 							workspaceId,
 						);
 
-						await editOriginalInteractionResponse(
-							token,
-							`✅ Workspace **${workspace.name}** unsubscribed successfully!`,
-						);
+						await editOriginalInteractionResponse(token, {
+							content: `✅ Workspace **${workspace.name}** unsubscribed successfully!`,
+						});
 					} catch (error) {
 						console.error(error);
 
 						try {
-							await editOriginalInteractionResponse(
-								token,
-								`❌ An error occurred while unsubscribing from the workspace.`,
-							);
+							await editOriginalInteractionResponse(token, {
+								content: `❌ An error occurred while unsubscribing from the workspace.`,
+							});
 						} catch (error) {
 							console.error(error);
 						}
@@ -167,7 +158,6 @@ discord.post("/", verifyKeyMiddleware, async (c) => {
 		}
 	}
 
-	// Default response for unknown commands
 	return c.json({
 		type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
 		data: { content: "❌ Unknown command" },
