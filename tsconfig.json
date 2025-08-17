@@ -4,10 +4,9 @@
 		"module": "nodenext",
 		"moduleResolution": "nodenext",
 		"strict": true,
-		"verbatimModuleSyntax": true,
 		"skipLibCheck": true,
-		"outDir": "./dist"
+		"esModuleInterop": true
 	},
-	"include": ["src", "scripts"],
-	"exclude": ["node_modules"]
+	"include": ["src"],
+	"exclude": ["node_modules", ".vercel", "dist"]
 }

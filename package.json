@@ -2,9 +2,7 @@
 	"name": "toban-bot",
 	"type": "module",
 	"scripts": {
-		"dev": "tsx watch src/index.ts",
-		"build": "tsc",
-		"start": "node dist/index.js",
+		"dev": "tsx watch src/server.ts",
 		"discord:create": "tsx scripts/discord/create.ts",
 		"discord:delete": "tsx scripts/discord/delete.ts",
 		"discord:list": "tsx scripts/discord/list.ts"

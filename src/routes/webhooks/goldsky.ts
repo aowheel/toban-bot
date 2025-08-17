@@ -64,7 +64,9 @@ goldsky.post("*", verifySecretMiddleware, async (c) => {
 	const channels = await getChannelsByWorkspace(8453, treeId);
 
 	await Promise.all(
-		channels.map((channel) => createMessage(channel.channel_id, { embeds })),
+		channels.map((channel: { channel_id: string }) =>
+			createMessage(channel.channel_id, { embeds }),
+		),
 	);
 
 	return c.text("Success");

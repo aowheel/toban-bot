@@ -92,7 +92,7 @@ discord.post("/", verifyKeyMiddleware, async (c) => {
 
 						const content = `📋 Your workspace subscriptions:\n${workspaces
 							.map(
-								(workspace) =>
+								(workspace: { name: string; tree_id: number }) =>
 									`- **${workspace.name}** ( **ID** \`${workspace.tree_id}\` )`,
 							)
 							.join("\n")}`;

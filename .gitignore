@@ -1,8 +1,12 @@
 # deps
-node_modules/
+node_modules
 
 # env
 .env
 
 # build
-dist/
+dist
+
+# misc
+.DS_Store
+.vercel
