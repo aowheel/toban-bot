@@ -1,0 +1,143 @@
+{
+  "version": "6",
+  "dialect": "sqlite",
+  "id": "f5508ae2-8b73-4a93-b874-731c6c022249",
+  "prevId": "00000000-0000-0000-0000-000000000000",
+  "tables": {
+    "discord_channels": {
+      "name": "discord_channels",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
+    "toban_to_discord": {
+      "name": "toban_to_discord",
+      "columns": {
+        "chain_id": {
+          "name": "chain_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "tree_id": {
+          "name": "tree_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "channel_id": {
+          "name": "channel_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "toban_to_discord_chain_id_tree_id_toban_workspaces_chain_id_tree_id_fk": {
+          "name": "toban_to_discord_chain_id_tree_id_toban_workspaces_chain_id_tree_id_fk",
+          "tableFrom": "toban_to_discord",
+          "tableTo": "toban_workspaces",
+          "columnsFrom": [
+            "chain_id",
+            "tree_id"
+          ],
+          "columnsTo": [
+            "chain_id",
+            "tree_id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "toban_to_discord_channel_id_discord_channels_id_fk": {
+          "name": "toban_to_discord_channel_id_discord_channels_id_fk",
+          "tableFrom": "toban_to_discord",
+          "tableTo": "discord_channels",
+          "columnsFrom": [
+            "channel_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "toban_to_discord_chain_id_tree_id_channel_id_pk": {
+          "columns": [
+            "chain_id",
+            "tree_id",
+            "channel_id"
+          ],
+          "name": "toban_to_discord_chain_id_tree_id_channel_id_pk"
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
+    "toban_workspaces": {
+      "name": "toban_workspaces",
+      "columns": {
+        "chain_id": {
+          "name": "chain_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "tree_id": {
+          "name": "tree_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {
+        "toban_workspaces_chain_id_tree_id_pk": {
+          "columns": [
+            "chain_id",
+            "tree_id"
+          ],
+          "name": "toban_workspaces_chain_id_tree_id_pk"
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    }
+  },
+  "views": {},
+  "enums": {},
+  "_meta": {
+    "schemas": {},
+    "tables": {},
+    "columns": {}
+  },
+  "internal": {
+    "indexes": {}
+  }
+}
