@@ -10,7 +10,6 @@ export const tobanWorkspaces = sqliteTable(
 	{
 		chainId: text("chain_id").notNull(),
 		treeId: text("tree_id").notNull(),
-		name: text("name").notNull(),
 	},
 	(t) => [primaryKey({ columns: [t.chainId, t.treeId] })],
 );

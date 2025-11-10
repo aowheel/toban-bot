@@ -4,6 +4,9 @@
 	"scripts": {
 		"dev": "wrangler dev",
 		"deploy": "wrangler deploy --minify",
+		"discord-create": "tsx scripts/discord/create.ts",
+		"discord-delete": "tsx scripts/discord/delete.ts",
+		"discord-list": "tsx scripts/discord/list.ts",
 		"drizzle-generate": "drizzle-kit generate",
 		"d1-migrate:local": "wrangler d1 migrations apply toban-bot --local",
 		"d1-migrate:remote": "wrangler d1 migrations apply toban-bot --remote",
@@ -11,9 +14,6 @@
 		"biome-check": "biome check --write"
 	},
 	"dependencies": {
-		"@hatsprotocol/sdk-v1-core": "^0.12.4",
-		"@hatsprotocol/sdk-v1-subgraph": "^1.1.2",
-		"@namestone/namestone-sdk": "^0.2.15",
 		"discord-interactions": "^4.4.0",
 		"drizzle-orm": "^0.44.7",
 		"hono": "^4.10.4",
@@ -21,6 +21,8 @@
 	},
 	"devDependencies": {
 		"@biomejs/biome": "2.3.4",
+		"@types/node": "^24.10.0",
+		"dotenv": "^17.2.3",
 		"drizzle-kit": "^0.31.6",
 		"wrangler": "^4.4.0"
 	}

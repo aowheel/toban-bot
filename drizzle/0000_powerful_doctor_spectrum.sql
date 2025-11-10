@@ -14,6 +14,5 @@ CREATE TABLE `toban_to_discord` (
 CREATE TABLE `toban_workspaces` (
 	`chain_id` text NOT NULL,
 	`tree_id` text NOT NULL,
-	`name` text NOT NULL,
 	PRIMARY KEY(`chain_id`, `tree_id`)
 );
