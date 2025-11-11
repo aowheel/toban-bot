@@ -147,7 +147,7 @@ export class GoldskyService {
 		});
 	}
 
-	async handleFractionTokenTransfered(
+	async handleFractionTokenTransferred(
 		chainId: string,
 		payload: TransferFractionTokenPayload,
 	): Promise<void> {

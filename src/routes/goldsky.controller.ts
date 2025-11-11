@@ -26,7 +26,7 @@ goldsky.post("/:chainId/fraction-token/*", async (c) => {
 	const body = await c.req.json();
 	const service = c.get("service");
 
-	await service.handleFractionTokenTransfered(chainId, body.data.new);
+	await service.handleFractionTokenTransferred(chainId, body.data.new);
 
 	return c.json({ status: "success" });
 });
