@@ -10,6 +10,7 @@
 		"drizzle-generate": "drizzle-kit generate",
 		"d1-migrate:local": "wrangler d1 migrations apply toban-bot --local",
 		"d1-migrate:remote": "wrangler d1 migrations apply toban-bot --remote",
+		"cf-secret": "wrangler secret bulk",
 		"cf-typegen": "wrangler types --env-interface CloudflareBindings",
 		"biome-check": "biome check --write"
 	},

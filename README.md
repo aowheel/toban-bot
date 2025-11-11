@@ -4,7 +4,10 @@ Discord notification bot for [Toban](https://github.com/hackdays-io/toban) works
 
 ## Supported Platforms
 
-- **Discord**: Slash commands and rich embed notifications
+- **Discord**: Slash commands and rich embed notifications. Available commands:
+  - `/workspace add <id>` - Subscribe the current channel to workspace notifications
+  - `/workspace list` - List subscribed workspaces
+  - `/workspace remove <id>` - Unsubscribe the current channel from a workspace
 
 ## Features
 
@@ -25,9 +28,6 @@ Discord notification bot for [Toban](https://github.com/hackdays-io/toban) works
 
 - Node.js 18+
 - pnpm
-- Cloudflare account
-- Discord Bot Token and Application ID
-- API Keys: NameStone, Pinata Gateway, Goldsky Webhook Secret
 
 ## Setup
 
@@ -38,59 +38,44 @@ pnpm install
 
 2. Create `.dev.vars` file:
 ```bash
-DISCORD_BOT_TOKEN=
-DISCORD_APPLICATION_ID=
-DISCORD_PUBLIC_KEY=
-GOLDSKY_WEBHOOK_SECRET=
-NAMESTONE_API_KEY=
-PINATA_GATEWAY_TOKEN=
-HATS_GRAPHQL_ENDPOINT=
-TOBAN_GRAPHQL_ENDPOINT=
-```
-
-3. Run database migrations:
-```bash
-pnpm d1-migrate:local  # or d1-migrate:remote for production
-```
-
-4. Register Discord slash commands:
-```bash
-pnpm discord-create
+cp .dev.vars.example .dev.vars
 ```
 
 ## Development
 
+1. Run database migrations:
+```bash
+pnpm d1-migrate:local
+```
+
+2. Start the development server:
 ```bash
 pnpm dev
 ```
 
+3. If anything changes in `wrangler.jsonc` or `.dev.vars`, regenerate types:
+```bash
+pnpm cf-typegen
+```
+
+4. If `src/db/schema.ts` changes, regenerate Drizzle SQL:
+```bash
+pnpm drizzle-generate
+```
+
 ## Deployment
 
+1. Run database migrations for production:
+```bash
+pnpm d1-migrate:remote
+```
+
+2. Add secrets to Cloudflare:
+```bash
+pnpm cf-secret [file]
+```
+
+3. Deploy to Cloudflare:
 ```bash
 pnpm deploy
 ```
-
-## Discord Commands
-
-- `/workspace add <id>` - Subscribe to workspace notifications
-- `/workspace list` - List subscribed workspaces
-- `/workspace remove <id>` - Unsubscribe from workspace
-
-## API Endpoints
-
-- `POST /api/webhooks/goldsky` - Goldsky blockchain events
-- `POST /api/webhooks/discord` - Discord interactions
-
-## Scripts
-
-| Command | Description |
-|---------|-------------|
-| `pnpm dev` | Start development server |
-| `pnpm deploy` | Deploy to Cloudflare Workers |
-| `pnpm discord-create` | Register Discord commands |
-| `pnpm discord-delete` | Delete Discord commands |
-| `pnpm discord-list` | List Discord commands |
-| `pnpm drizzle-generate` | Generate database migrations |
-| `pnpm d1-migrate:local` | Apply migrations locally |
-| `pnpm d1-migrate:remote` | Apply migrations to production |
-| `pnpm biome-check` | Run linter and formatter |
